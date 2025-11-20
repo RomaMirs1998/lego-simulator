@@ -91,18 +91,33 @@ function Szene() {
    * Findet den übergeordneten Brick (die Gruppe) und seine Daten,
    * egal wie tief das getroffene Mesh verschachtelt ist.
    */
-  const findParentBrick = (eventObject: THREE.Object3D): { brick: BrickData | null, group: THREE.Group | null } => {
-    let current: THREE.Object3D | null = eventObject
-    while (current) {
-      if (current.userData?.id) {
-        const brick = bricks.find(b => b.id === current.userData.id)
-        return { brick: brick || null, group: current as THREE.Group }
-      }
-      current = current.parent
-    }
-    return { brick: null, group: null }
-  }
+ // src/App.tsx (Ausschnitt)
 
+  /**
+   * Findet den übergeordneten Brick (die Gruppe) und seine Daten
+   * über Rekursion.
+   */
+  const findParentBrick = (
+    currentObject: THREE.Object3D | null // Beginnt mit dem getroffenen Objekt
+  ): { brick: BrickData | null; group: THREE.Group | null } => {
+    
+    // 1. Basis-Fall (Abbruchbedingung):
+    // Wenn wir am Ende der Szene angekommen sind (currentObject ist null)
+    if (!currentObject) {
+      return { brick: null, group: null }
+    }
+
+    // 2. Erfolgs-Fall:
+    // Wenn das aktuelle Objekt die ID in userData hat
+    if (currentObject.userData?.id) {
+      const brick = bricks.find(b => b.id === currentObject.userData.id)
+      return { brick: brick || null, group: currentObject as THREE.Group }
+    }
+
+    // 3. Rekursiver Fall:
+    // Nichts gefunden? Rufe dieselbe Funktion für das Parent-Objekt auf.
+    return findParentBrick(currentObject.parent)
+  }
 
   // Validierungs-Logik (Prüft Kollisionen im Gitter)
   const isPositionValid = (newBrick: {
