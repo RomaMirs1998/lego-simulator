@@ -1,0 +1,17 @@
+/* src/App.css */
+
+/* Setzt die App auf volle Höhe/Breite */
+#root {
+  width: 100vw;
+  height: 100vh;
+}
+
+/* Entfernt Standard-Ränder */
+body, html {
+  margin: 0;
+  padding: 0;
+  /* Verhindert Scrollen auf der Seite selbst */
+  overflow: hidden; 
+  /* Sorgt für ein dunkles Thema, besser für 3D-Editoren */
+  background-color: #111;
+}
