@@ -84,9 +84,7 @@ function Szene() {
   }, [tool, hoveredBrickId, bricks, rotateCurrentBrick, setInternalRotation])
 
 
-  // ##################################################################
-  // KORRIGIERTE HELFERFUNKTION
-  // ##################################################################
+
   /**
    * Findet den übergeordneten Brick (die Gruppe) und seine Daten,
    * egal wie tief das getroffene Mesh verschachtelt ist.
@@ -125,7 +123,7 @@ function Szene() {
     type: string
     rotation: number
   }): boolean => {
-    // ... (Diese Funktion ist unverändert und bleibt als AABB-Check)
+
     const [newW, newH, newL] = getBrickDimensions(
       newBrick.type,
       newBrick.rotation,
@@ -204,9 +202,6 @@ function Szene() {
     return [snappedX, snappedY, snappedZ]
   }
 
-  // ##################################################################
-  // KORRIGIERTE EVENT HANDLER
-  // ##################################################################
 
   // Handler für BODEN (Mausbewegung)
   const handleFloorMove = (event: ThreeEvent<PointerEvent>) => {
@@ -293,10 +288,7 @@ function Szene() {
       let finalInternalRotation = undefined
       
       if (parentBrick && parentBrick.type === 'turntable_2x2') {
-          finalRotation = 0 // Steine auf Turntables sind nicht Gitter-gedreht
-          // HINWEIS: Dies ist eine Vereinfachung. Idealerweise
-          // würde die "currentRotation" (R-Taste) des Geister-Steins
-          // ZUR "internalRotation" des Parents addiert werden.
+          finalRotation = 0 
           finalInternalRotation = parentBrick.internalRotation
       }
       
@@ -310,7 +302,7 @@ function Szene() {
       setCursorPos(null)
       
     } else if (tool === 'delete') {
-      // KORREKTUR: Nutze die ID des gefundenen Parents
+      
       if (parentBrick) {
         removeBrick(parentBrick.id)
       }
@@ -320,7 +312,7 @@ function Szene() {
 
   // Klick-Handler für BODEN
   const handleFloorClick = (event: ThreeEvent<MouseEvent>) => {
-    // ... (Diese Funktion ist unverändert)
+    
     event.stopPropagation()
     if (tool === 'build' && cursorPos && isCursorValid) {
       addBrick({
