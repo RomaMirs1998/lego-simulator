@@ -1,6 +1,6 @@
 // src/components/UI.tsx
-import React from 'react'
-import { useStore, legoColors, type Tool } from '../store'
+
+import { useStore, legoColors,  } from '../store'
 import './UI.css'
 
 // Helfer-Funktion, um den Namen der Farbe zu finden (optional, aber nett)
